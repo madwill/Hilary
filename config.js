@@ -72,7 +72,7 @@ config.redis = {
  */
 config.servers = {
     'globalAdminAlias': 'admin',
-    'globalAdminHost': 'admin.oae.com',
+    'globalAdminHost': 'z4a.zenlive.ca',
     'globalAdminPort': 2000,
     'serverInternalAddress': null,
     'tenantPort': 2001,
@@ -80,8 +80,8 @@ config.servers = {
     'strictHttps': true
 };
 
-var tmpDir = process.env.TMP || process.env.TMPDIR || process.env.TEMP || '/tmp' || process.cwd();
-tmpDir += '/oae';
+var tmpDir = "/home/hilary/oae/temp";
+//tmpDir += '/oae';
 
 /**
  * `config.files`
@@ -98,12 +98,12 @@ tmpDir += '/oae';
  */
 config.files = {
     'tmpDir': tmpDir,
-    'uploadDir': tmpDir + '/uploads',
+    'uploadDir': '/home/hilary/oae/uploads',
     'cleaner': {
         'enabled': true,
         'interval': 2*60*60
     },
-    'localStorageDirectory': '../files'
+    'localStorageDirectory': '/home/hilary/oae/files'
 };
 
 // The configuration that can be used to generate secure HTTP cookies.
@@ -249,18 +249,22 @@ config.mq = {
  * @param  {String}      credentials.password           The password to login with on the global admin server
  */
 config.previews = {
-    'enabled': false,
+    'enabled': true,
     'tmpDir': tmpDir + '/previews',
     'office': {
-        'binary': 'soffice',
+        'binary': '/usr/bin/soffice',
         'timeout': 120000
     },
     'pdftk': {
-        'binary': 'pdftk',
+        'binary': '/usr/bin/pdftk',
         'timeout': 120000
     },
     'pdf2htmlEX':{
-        'binary': 'pdf2htmlEX',
+        'binary': '/usr/bin/pdf2htmlEX',
+        'timeout': 120000
+    },
+    'pdf2swf':{
+        'binary': '/usr/bin/pdf2swf',
         'timeout': 120000
     },
     'link': {
@@ -282,7 +286,7 @@ config.previews = {
  * @param  {String}    key     This key will be used to sign URLs like profile pictures, content previews, etc.. . It's vital to the security of the system that you change this in production.
  */
 config.signing = {
-    'key': 'The default signing key, please change me.'
+    'key': 'this is not the default signing key its one made for zen'
 };
 
 /**
@@ -400,7 +404,7 @@ config.saml = {
  * @param  {Number}     hosts[i].port   The port number on which Hilary will be accessing the etherpad API.
  */
 config.etherpad = {
-    'apikey': '13SirapH8t3kxUh5T5aqWXhXahMzoZRA',
+    'apikey': 'c8c017eab6cac60c4550a7ad417373e60f9c1fd9bf55414751f890540de66663',
     'hosts': [
         {
             'host': '127.0.0.1',
@@ -410,12 +414,12 @@ config.etherpad = {
 };
 
 /**
-* `config.tincanapi`
-*
-* Configuration namespace for the TinCan API logic
-*
-* @param  {Number}  timeout             Defines the timeout (in ms) when the request to the LRS should be killed
-*/
+ * `config.tincanapi`
+ *
+ * Configuration namespace for the TinCan API logic
+ *
+ * @param  {Number}  timeout             Defines the timeout (in ms) when the request to the LRS should be killed
+ */
 config.tincanapi = {
     'timeout': 4000
 };
