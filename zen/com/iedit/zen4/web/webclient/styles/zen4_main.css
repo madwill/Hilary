@@ -1,0 +1,205 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@namespace components "org.iedit.zen4.web.webclient.views.components.tabbar.*";
+
+
+
+/**
+* HEADER
+*/
+
+s|Application{
+	fontFamily:Candara,arial;
+	color:#2c3e50;
+	fontSize:16pt;
+	backgroundColor:#ecf0f1;
+	backgroundAlpha:0.8;
+}
+
+s|Callout{
+	backgroundAlpha:0;
+}
+
+mx|ToolTip {
+	backgroundAlpha: 0.7;
+	backgroundColor: black;
+	color: white;
+	cornerRadius: 8;
+	fontSize: 16;
+	borderColor:#ecf0f1;
+	paddingTop:15;
+	paddingBottom:15;
+	paddingLeft:15;
+	paddingRight:15;
+	textAlign:center;
+}
+
+
+.Header{
+	backgroundColor:#ecf0f1;
+	backgroundAlpha:0.9;
+	borderVisible:false;
+}
+
+.SideBar{
+	backgroundColor:#ecf0f1;
+	backgroundAlpha:0.0;
+	borderVisible:false;
+}
+
+.toggleSwitch
+{
+	skinClass:ClassReference("com.iedit.zen4.web.webclient.skins.ToggleSwitchSkin");
+}
+
+
+.Whiteboard{
+	backgroundColor:#fdfdfd;
+	
+	borderVisible:false;
+}
+
+.videoBox{
+	backgroundColor:#000000;
+	backgroundAlpha:0.6;
+	borderVisible:false;
+	borderWeight:1;
+	borderColor:#ebeeed;
+	borderAlpha:0.8;
+}
+
+
+.Body{
+	backgroundColor:#ecf0f1;
+	backgroundAlpha:0.8;
+	borderVisible:false;
+}
+
+.LoginView{
+	backgroundColor:#ecf0f1;
+	backgroundAlpha:0.8;
+	borderVisible:false;
+}
+
+.chatTextInput{
+	borderColor:#ffffff;
+	focusColor:#ffffff;
+}
+
+.chatTextContainer{
+	borderColor:#d3d3d3;
+	backgroundColor:#FFFFFF;
+}
+
+.FullyTransparent{
+	backgroundAlpha:0.0;
+	borderVisible:true;
+}
+
+.HeaderButton{	
+	upColor:#2980b9;
+	overColor:#f39c12;  
+	downColor:#f6ab33;
+	skinClass:ClassReference("com.iedit.zen4.web.webclient.skins.HeaderButton")
+}
+
+.HeaderCalloutButton{
+	upColor:#2980b9;
+	overColor:#f39c12;  
+	downColor:#f6ab33;
+	skinClass:ClassReference("com.iedit.zen4.web.webclient.skins.HeaderCalloutButton")
+} 
+
+.HeaderToggleButton{
+	upColor:#2980b9;
+	overColor:#f39c12;  
+	downColor:#f6ab33; 
+	skinClass:ClassReference("com.iedit.zen4.web.webclient.skins.HeaderToggleButton")
+}
+
+.ConfigListButton{
+	upColor:#2980b9;
+	overColor:#f39c12;  
+	downColor:#f6ab33;
+	skinClass:ClassReference("com.iedit.zen4.web.webclient.skins.ListToggleButton")
+}
+
+.WhiteboardCallOut{
+	skinClass:ClassReference("com.iedit.zen4.web.webclient.skins.zenSkinParts.ZenCalloutSkin")
+	
+}
+
+.CalloutStyle{
+	backgroundAlpha:0.7;
+	backgroundColor:#000000;
+	borderVisible:false;
+	borderAlpha:0;
+	borderThickness:NaN;
+}
+
+.MicActivity{
+	backgroundColor:#74acd1;
+}
+
+.UserListToggle{
+	upColor:#dde3e4;
+}
+
+.UserListHardwareToggle{
+	upColor:#dde3e4;
+}
+
+.BorToggleStyle{
+	upColor:#dde3e4;
+	selectedColor:#3474b6;
+}
+
+.HeaderMeetingTitle{
+	fontSize:27pt;
+}
+
+.HeaderMeetingDesc{
+	fontSize:16pt;
+	color:#7f8c8d;
+}
+
+.headerSeparator{
+	backgroundColor:#2980b9;
+}
+
+.WhoIsTalking{
+	fontSize:18pt;
+	textAlign:right;
+}
+
+
+/**
+* BODY
+*/
+
+
+/**
+* BODY
+*/
+
+
+/**
+* Components
+*/
+
+s|List s|Scroller {
+	skinClass: ClassReference("com.iedit.zen4.web.webclient.skins.scrollbar.SlimScrollerSkin");
+}
+
+
+.StatusDisplay{
+	
+}
+
+.WhiteText{
+	color:#FFFFFF;
+	
+}
+
+

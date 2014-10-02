@@ -235,12 +235,67 @@ require(['jquery', 'oae.core'], function($, oae) {
                     ]
                 }
             ]
+        },
+        {
+            'zen': 'zengo',
+            'title': 'Zenlive Go',
+            'icon': '/ui/img/loginLogo-mini.png',
+            'url':'http://z4.zenlive.ca/zen/?groupid='+groupProfile.id,
+            'closeNav': true,
+            'layout': [
+                {
+                    'width': 'col-md-12',
+                    'widgets': [
+                        {
+                            'name': 'members',
+                            'settings': {
+                                'context': groupProfile,
+                                'canManage': groupProfile.isManager
+                            }
+                        }
+                    ]
+                }
+            ]
         });
 
         $(window).trigger('oae.trigger.lhnavigation', [lhNavPages, lhNavActions, baseUrl, groupProfile.displayName]);
+
+
+
         $(window).on('oae.ready.lhnavigation', function() {
             $(window).trigger('oae.trigger.lhnavigation', [lhNavPages, lhNavActions, baseUrl, groupProfile.displayName]);
+
+            //var content  = document.getElementById('lhnavigation-container').innerHTML;
+            //document.getElementById('lhnavigation-container').innerHTML = "<div id='zenliveGo' style='position: absolute;left: 58px;top:315px;cursor: pointer;'><img style='float: left;' src='/ui/img/loginLogo-mini.png' /> <div style='float: left;'  >Zenlive Go </div></div>" + content;
+
+
+           document.getElementById('zenliveGo').onclick = function(){
+               var ua = navigator.userAgent.toLowerCase();
+               var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+               if(isAndroid) {
+                   window.location = 'zenlive4://' + groupProfile.id;
+               }
+               else{
+                   window.open('http://' +document.domain +'/zen/?groupid='+groupProfile.id ,'winname','directories=no,titlebar=no,toolbar=yes,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1200,height=750');
+               }
+           }
+
         });
+
+
+        //var content  = document.getElementById('lhnavigation-container').innerHTML;
+        //document.getElementById('lhnavigation-container').innerHTML = "<div id='zenliveGo' style='position: absolute;left: 58px;top:315px;cursor: pointer;'><img style='float: left;' src='/ui/img/loginLogo-mini.png' /> <div style='float: left;'  >Zenlive Go </div></div>" + content;
+
+        document.getElementById('zenliveGo').onclick = function(){
+            var ua = navigator.userAgent.toLowerCase();
+            var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+            if(isAndroid) {
+                window.location = 'zenlive4://' + groupProfile.id;
+            }
+            else{
+                window.open('http://' +document.domain +'/zen/?groupid='+groupProfile.id ,'winname','directories=no,titlebar=no,toolbar=yes,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1200,height=750');
+            }
+        }
     };
 
     /**
@@ -389,5 +444,8 @@ require(['jquery', 'oae.core'], function($, oae) {
     });
 
     getGroupProfile();
+
+
+
 
 });

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!-- Destination de Nakamura -->
+	<endpoint>
+		<!--<url>http://localhost:8080</url> -->
+		<!--<url>http://hilarydev.zenlive.ca</url> 
+		<url>http://admin-na-mtl01.braincloudlearning.com</url> 
+		<url>http://admin.braincloudlearning.com</url>		
+		<url>http://z4.zenlive.ca</url>-->		
+		<url>http://z4.zenlive.ca</url> 
+	</endpoint>
+	<red5>  
+		<!-- Destination de RED5 -->   
+		<url>rtmp://173.246.80.153/zen4/</url> 
+		<!-- <url>173.246.80.153</url>-->  
+		<!-- <url>red5.openface.ca</url>-->
+	</red5>	
+	<mode>hilary</mode> 
+	<!-- <mode>braincloud</mode>-->
+	<!-- <mode>hilary</mode>-->
+</config> 
