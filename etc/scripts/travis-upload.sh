@@ -9,13 +9,14 @@
 #   * The build was not performed on a pull request to the master branch
 ##
 
-EXPECTED_REPOSITORY="oaeproject/3akai-ux"
+EXPECTED_REPOSITORY="oaeproject/Hilary"
 EXPECTED_BRANCH="master"
 EXPECTED_PULL_REQUEST=false
 
 function package_and_upload {
-    rm -rf target
-    bin/package -su --upload-bucket=oae-releases --upload-region=us-east-1 --cdn https://oaetenant-researchresearch.netdna-ssl.com
+    git reset --hard $TRAVIS_COMMIT
+    npm shrinkwrap
+    bin/package -su --upload-bucket=oae-releases --upload-region=us-east-1
 }
 
 if [[ "$TRAVIS_REPO_SLUG" == "$EXPECTED_REPOSITORY" && "$TRAVIS_BRANCH" == "$EXPECTED_BRANCH" && "$TRAVIS_PULL_REQUEST" == "$EXPECTED_PULL_REQUEST" ]]; then

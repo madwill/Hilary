@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var path = require('path');
-var util = require('util');
 
 var CoreUtil = require('oae-release-tools').CoreUtil;
 var PackageUtil = require('oae-release-tools').PackageUtil;
@@ -18,27 +17,21 @@ var argv = require('optimist')
     .alias('h', 'help')
     .describe('h', 'Show this help information')
 
+    .alias('r', 'remote')
+    .describe('r', 'The remote repository to push the release commits into (e.g., origin)')
+    .demand('r')
+
     .alias('s', 'skip-tests')
     .describe('s', 'Skip the unit tests in the release process')
 
     .alias('p', 'package')
-    .describe('p', 'Generate a package tarball (tar.gz) of the tag')
-
-    .alias('r', 'remote')
-    .describe('r', 'The remote repository to push the release commits into (e.g., origin)')
-    .demand('r')
+    .describe('p', 'Generate a package tarball (tar.gz) of the tag before erasing npm-shrinkwrap from master')
 
     .alias('v', 'version')
     .describe('v', 'Which version to release (e.g., 0.4.1)')
     .demand('v')
 
     .argv;
-
-// Display the help if requested
-if (argv.h) {
-    require('optimist').showHelp();
-    return process.exit(0);
-}
 
 
 /////////////////////
@@ -50,6 +43,12 @@ var packageDest = 'dist';
 var remoteName = argv.r;
 var version = argv.v;
 
+// Display the help if requested
+if (argv.h) {
+    require('optimist').showHelp();
+    return process.exit(0);
+}
+
 // Ensure everything is OK to do a release
 ReleaseUtil.validateRelease(remoteName, 3);
 
@@ -59,7 +58,7 @@ if (argv.p) {
 }
 
 // Load and validate the package.json
-var packageJson = CoreUtil.loadPackageJson(packageJsonPath, '3akai-ux', 4);
+var packageJson = CoreUtil.loadPackageJson(packageJsonPath, 'Hilary', 4);
 
 // Ensure our target version is a valid jump from where we are
 ReleaseUtil.validateTargetVersion(packageJson, argv.v, remoteName, 5);
@@ -74,8 +73,12 @@ if (!argv.s) {
 // Bump the version in package.json to the target version
 ReleaseUtil.bumpPackageJsonVersion(packageJsonPath, packageJson.version, argv.v, 7);
 
-// Commit the version change and tag the release
-ReleaseUtil.gitCommitVersionAndTag(argv.v, remoteName, 8);
+// Shrinkwrap our dependencies
+ReleaseUtil.shrinkwrap(8);
+
+// Commit the shrinkwrap, version and tag the release
+CoreUtil.exec('git add npm-shrinkwrap.json', 'Failed to add npm-shrinkwrap.json to the git index', 9);
+ReleaseUtil.gitCommitVersionAndTag(argv.v, remoteName, 9);
 
 // Optionally package up the release on the tag
 if (argv.p || argv.u) {
@@ -87,7 +90,10 @@ if (argv.p || argv.u) {
     }
 
     // Skip the tests and just use the version from package.json
-    CoreUtil.exec(packageCmd, 'Error distributing the release', 9, true);
+    CoreUtil.exec(packageCmd, 'Error distributing the release', 10, true);
 }
 
-CoreUtil.logSuccess('Successfully released 3akai-ux '.text + argv.v.white + ' to the remote repository '.text + remoteName.white);
+// Remove the shrinkwrap and commit it for master
+ReleaseUtil.gitRemoveShrinkwrapAndCommit(argv.v, remoteName, 11);
+
+CoreUtil.logSuccess('Successfully released Hilary '.text + argv.v.white + ' to the remote repository '.text + remoteName.white);

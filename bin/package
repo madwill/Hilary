@@ -12,19 +12,21 @@ var PackageUtil = require('oae-release-tools').PackageUtil;
 //////////////////////
 
 var argv = require('optimist')
-    .usage('Usage: $0 [-s] [-u] [--upload-bucket=<bucket name>] [--upload-region=<region name>] [-v <force ui version>]')
+    .usage('Usage: $0 [-s] [-u] [-o <output dir>] [-v <force hilary version>]')
 
     .alias('h', 'help')
     .describe('h', 'Show this help information')
 
-    .alias('v', 'ui-version')
-    .describe('v', 'The version of the UI that we are packaging. If not specified, it will be derived from the 3akai-ux version in package.json and git describe')
+    .demand('o')
+    .alias('o', 'output')
+    .describe('o', 'The target output directory to copy the release artifacts')
+    .default('o', 'dist')
+
+    .alias('v', 'version')
+    .describe('v', 'The version of hilary that we are packaging. If not specified, it will be derived from the hilary version in package.json and git describe')
 
     .alias('s', 'skip-tests')
     .describe('s', 'Skip the unit tests in the packaging process')
-
-    .alias('c', 'cdn')
-    .describe('c', 'The URL of the CDN that will be used')
 
     .alias('u', 'upload')
     .describe('u', 'Upload the package and checksum to Amazon S3')
@@ -52,12 +54,8 @@ if (argv.h) {
 var systemInfo = CoreUtil.getSystemInfo();
 var packageJsonPath = path.resolve('package.json');
 
-// Ensure the target directory doesn't exist yet
-var srcDir = 'target';
-PackageUtil.validatePackage(srcDir, 3);
-
 // Load and validate the package.json
-var packageJson = CoreUtil.loadPackageJson(packageJsonPath, '3akai-ux', 4);
+var packageJson = CoreUtil.loadPackageJson(packageJsonPath, 'Hilary', 4);
 
 if (!argv.s) {
     CoreUtil.runUnitTests(6);
@@ -65,26 +63,20 @@ if (!argv.s) {
     CoreUtil.logWarn('Skipping unit tests because of -s parameter');
 }
 
-// Get the url of the CDN, if any
-var cdn = argv.c || '';
-
-// Find the 3akai-ux version. If not specified explicitly in the command with a -v parameter, it will be derived
+// Find the Hilary version. If not specified explicitly in the command with a -v parameter, it will be derived
 // using a combination of the package.json version and the closest matching tag using git describe
-var uiVersion = argv.v || CoreUtil.gitVersion(packageJson.version, 7);
+var hilaryVersion = argv.v || CoreUtil.gitVersion(packageJson.version, 7);
 
-CoreUtil.logSuccess('Resolved UI version to be '.text + uiVersion.white);
+CoreUtil.logSuccess('Resolved hilary version to be '.text + hilaryVersion.white);
 
-// Loudly optimize the UI into the target directory
-var cmd = util.format('CDN_URL="%s" node_modules/.bin/grunt', cdn);
-CoreUtil.exec(cmd, 'Error during the grunt optimization stage', 8, true);
-CoreUtil.logSuccess('Successfully optimized the UI files into the '.text + 'target'.white + ' directory'.text);
+// Copy the release files to the source directory
+var srcDir = PackageUtil.copyHilaryReleaseFiles(argv.o, 8).srcDir;
 
-// Save the system info into the 3akai-ux target directory. This will tell us at least what version we are
-PackageUtil.saveBuildInfo(srcDir, uiVersion, systemInfo, 9);
+PackageUtil.saveBuildInfo(srcDir, hilaryVersion, systemInfo, 9);
 
 // Package the source directory into a tarball
-var packageFilename = util.format('3akai-ux-%s', uiVersion);
-var packageResult = PackageUtil.packageRelease(srcDir, '.', packageFilename, 10);
+var packageFilename = util.format('hilary-%s_node-%s', hilaryVersion, systemInfo.nodeVersion);
+var packageResult = PackageUtil.packageRelease(srcDir, argv.o, packageFilename, 10);
 var checksumResult = PackageUtil.checksumPackage(packageResult.packagePath, 11);
 
 if (argv.u) {

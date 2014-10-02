@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var path = require('path');
-var util = require('util');
 
 var CoreUtil = require('oae-release-tools').CoreUtil;
 var UploadUtil = require('oae-release-tools').UploadUtil;
@@ -15,7 +14,7 @@ var argv = require('optimist')
     .usage('Usage: $0 -b <bucket name> -p <package file path> -c <checksum file path> [-r <region=eu-west-1>]')
 
     .alias('h', 'help')
-    .describe('h', 'Show this help information')
+    .describe('h', 'Show help information')
 
     .alias('b', 'bucket')
     .describe('b', 'The Amazon S3 bucket to which to upload the package and checksum files')
@@ -45,6 +44,7 @@ UploadUtil.upload(argv.b, argv.r, 'oae', argv.p, argv.c, function(err) {
     if (err) {
         CoreUtil.logFail('Error uploading release artifacts to Amazon S3');
         if (err instanceof Error) {
+            // It's a Node.js error object with a stack trace
             CoreUtil.logFail(err.stack);
         } else {
             // It's an AmazonS3 error message
