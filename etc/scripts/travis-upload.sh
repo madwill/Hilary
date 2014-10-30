@@ -9,13 +9,12 @@
 #   * The build was not performed on a pull request to the master branch
 ##
 
-EXPECTED_REPOSITORY="oaeproject/Hilary"
+EXPECTED_REPOSITORY="oaeproject/3akai-ux"
 EXPECTED_BRANCH="master"
 EXPECTED_PULL_REQUEST=false
 
 function package_and_upload {
-    git reset --hard $TRAVIS_COMMIT
-    npm shrinkwrap
+    rm -rf target
     bin/package -su --upload-bucket=oae-releases --upload-region=us-east-1
 }
 
