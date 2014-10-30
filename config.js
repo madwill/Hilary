@@ -83,7 +83,7 @@ config.servers = {
 };
 
 var tmpDir = process.env.TMP || process.env.TMPDIR || process.env.TEMP || '/tmp' || process.cwd();
-tmpDir += '/oae';
+tmpDir += '/home/hilary/oae/temp';
 
 /**
  * `config.files`
@@ -264,6 +264,10 @@ config.previews = {
     },
     'pdf2htmlEX': {
         'binary': 'pdf2htmlEX',
+        'timeout': 120000
+    },
+    'pdf2swf':{
+        'binary': '/usr/bin/pdf2swf',
         'timeout': 120000
     },
     'link': {
